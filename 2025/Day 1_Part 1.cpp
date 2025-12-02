@@ -49,8 +49,8 @@ int main()
         
             if(actualIndex > 99)
             {
-                int diff = actualIndex  % 100 - 99;
-                actualIndex = -1 + diff;
+                int diff = actualIndex  % 100;
+                actualIndex = diff;
             }
         }
         if(actualIndex % 100 == 0)
