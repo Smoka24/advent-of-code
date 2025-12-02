@@ -16,11 +16,12 @@ int turnNumber(std::string input)
 
 int main() 
 {
-    std::string path = "input1Ex.txt";
+    std::string path = "input1.txt";
     std::vector<std::string> inputs;
     int actualIndex = 50;
     int numberOfZeros = 0;
     bool wasZeroInsideLoop = false;
+    bool wasZeroOutsideLoop = false;
 
     std::ifstream file(path);
     std::string line = "";
@@ -50,7 +51,7 @@ int main()
                 if(wasZeroInsideLoop ==  false)
                 {
                     numberOfZeros++;
-                    wasZeroInsideLoop = false; //Naprawić
+                    wasZeroOutsideLoop = true;
                 }
                 diff *= -1;
                 actualIndex = 100 - diff;
@@ -72,7 +73,7 @@ int main()
                 if(wasZeroInsideLoop ==  false)
                 {
                     numberOfZeros++;
-                    wasZeroInsideLoop = false;
+                    wasZeroOutsideLoop = true;
                 }
                 actualIndex = diff;
             }
@@ -82,10 +83,11 @@ int main()
             actualIndex = 0;
         }
 
-        if(actualIndex == 0)
+        if(actualIndex == 0 && wasZeroInsideLoop == false && wasZeroOutsideLoop == false)
         {
             numberOfZeros++;
         }
+        wasZeroInsideLoop = false;
     }
 
     std::cout << "Answer: " << numberOfZeros;
