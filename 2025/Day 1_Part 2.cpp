@@ -20,6 +20,7 @@ int main()
     std::vector<std::string> inputs;
     int actualIndex = 50;
     int numberOfZeros = 0;
+    bool wasAlreadyZero = false;
 
     std::ifstream file(path);
     std::string line = "";
@@ -39,29 +40,38 @@ int main()
         
             if(actualIndex < 0)
             {
-                int diff = actualIndex % 100 * -1;
+                int diff = actualIndex;
+                while(diff <= -100)
+                {
+                    diff += 100;
+                    numberOfZeros++;
+                    wasAlreadyZero = true;
+                }
+                diff *= -1;
                 actualIndex = 100 - diff;
+                if(!wasAlreadyZero)
+                numberOfZeros++;
             }
-        }
+        }   
         else
         {
             actualIndex += turns;
         
             if(actualIndex > 99)
             {
-                int diff = actualIndex  % 100 - 99;
-                actualIndex = -1 + diff;
+                int diff = actualIndex;
+                while(diff >= 100)
+                {
+                    diff -= 100;
+                    numberOfZeros++;
+                    wasAlreadyZero = true;
+                }               
+                actualIndex = diff;
+                if(!wasAlreadyZero)
+                numberOfZeros++;
             }
-        }
-        if(actualIndex % 100 == 0)
-        {
-            actualIndex = 0;
-        }
-
-        if(actualIndex == 0)
-        {
-            numberOfZeros++;
-        }
+        }   
+        wasAlreadyZero = false;
     }
 
     std::cout << "Answer: " << numberOfZeros;
