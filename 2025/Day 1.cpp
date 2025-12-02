@@ -8,16 +8,8 @@ int turnNumber(std::string input)
 {
     int turnNumber = 0;
 
-    if(input.length() == 2)
-    {
-        std::string numStr = input.substr(1,1);
-        turnNumber = std::atoi(numStr.c_str());
-    }
-    else
-    {
-        std::string numStr = input.substr(1,2);
-        turnNumber = std::atoi(numStr.c_str());
-    }
+    std::string numStr = input.substr(1, input.length() - 1);
+    turnNumber = std::atoi(numStr.c_str());
 
     return turnNumber;
 }
@@ -47,7 +39,7 @@ int main()
         
             if(actualIndex < 0)
             {
-                int diff = actualIndex * -1;
+                int diff = actualIndex % 100 * -1;
                 actualIndex = 100 - diff;
             }
         }
@@ -57,10 +49,15 @@ int main()
         
             if(actualIndex > 99)
             {
-                int diff = actualIndex - 99;
+                int diff = actualIndex  % 100 - 99;
                 actualIndex = -1 + diff;
             }
         }
+        if(actualIndex % 100 == 0)
+        {
+            actualIndex = 0;
+        }
+
         if(actualIndex == 0)
         {
             numberOfZeros++;
