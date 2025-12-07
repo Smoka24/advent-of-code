@@ -34,7 +34,7 @@ int main()
             if(c == '@')
             {
                 /// THIS PIECE OF CODE IS FOR MIDDLE OF THE TABLE ///
-                if(i - 1 > 0 && j - 1 > 0 && j < input[i].size() - 1 && i < input.size() - 1)  //middle without edges
+                if(i > 0 && j > 0 && j < input[i].size() - 1 && i < input.size() - 1)  //middle without edges
                 {
                     for(int k = -1; k < 2; k++)     //k - how many adjacent symbols we check
                     {
@@ -46,18 +46,20 @@ int main()
                         {
                             ctr++;
                         }
-                        if(input[i + k][j - 1] == '@')
-                        {
-                            ctr++;
-                        }
-                        if(input[i + k][j + 1] == '@')
-                        {
-                            ctr++;
-                        }
+
                     }
+                        if(input[i][j - 1] == '@')
+                        {
+                            ctr++;
+                        }
+                        if(input[i][j + 1] == '@')
+                        {
+                            ctr++;
+                        }
 
                     if(ctr < 4)
                     {
+                        ctr = 0;
                         rollsAccessed++;
                         std::cout << "Roll accessed in the middle: " << i << "," << j << std::endl;
                     }
@@ -193,7 +195,7 @@ int main()
   
                     }
                     /// LEFT COLUMN WITHOUT CORNERS ///
-                    if(j == 0 && (i > 0 && i < input.size() - 2))
+                    if(j == 0 && i > 0 && i < input.size() - 1)
                     {
                         for(int k = -1; k < 2; k++)
                         {
@@ -218,7 +220,7 @@ int main()
                         }
                     }
                     /// RIGHT COLUMN WITHOUT CORNERS ///
-                    if(j == input[i].size() - 1 && (i > 0 && i < input.size() - 2))
+                    if(j == input[i].size() - 1 && i > 0 && i < input.size() - 1)
                     {
                         for(int k = -1; k < 2; k++)
                         {
@@ -239,7 +241,7 @@ int main()
                         if(ctr < 4)
                         {
                             rollsAccessed++;
-                            std::cout << "Roll accessed in a left boundary: " << i << "," << j << std::endl;
+                            std::cout << "Roll accessed in a right boundary: " << i << "," << j << std::endl;
                         }
                     }
                 }
