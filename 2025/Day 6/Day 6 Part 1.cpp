@@ -6,10 +6,10 @@
 
 int main()
 {
-    std::string path = "inputEx.txt";
+    std::string path = "input.txt";
     std::vector<std::string> nonSerialized;
     std::vector<std::vector<std::string>> input;
-    int rollsAccessed = 0;
+    long long answer = 0;
     
     std::ifstream file(path);
     std::string line = "";
@@ -47,14 +47,35 @@ int main()
     
     
 
-    for(int i = 0; i < input.size(); i++)    //i - row index
+    for(int i = 0; i < input[0].size(); i++)    //i - column index
     {
-        for(int j = 0; j < input[i].size(); j++)    //j - column index
+        long long counter;
+        char sign;
+        if(input[4][i] == "*")
         {
-            
+            counter = 1;
+            sign = '*';
+        }
+        else
+        {
+            counter = 0;
+            sign = '+';
         }
 
+        for(int j = 0; j < input.size() - 1; j++)    //j - row index
+        {
+            if(sign == '*')
+            {
+                counter *= std::stoll(input[j][i]);
+            }
+            else
+            {
+                counter += std::stoll(input[j][i]);
+            }
+        }
+
+        answer += counter;
     }
 
-    std::cout << "Answer: " << rollsAccessed;
+    std::cout << "Answer: " << answer;
 }
