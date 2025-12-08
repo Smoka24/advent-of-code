@@ -8,8 +8,12 @@ int main()
 {
     std::string path = "input.txt";
     std::vector<std::vector<char>> input;
+    std::vector<std::vector<char>> inputCopy;
     int rollsAccessed = 0;
     int lastNumOfRollsAccessed = 0;
+    bool wasAnyFound = false;
+    bool wasZeroFound = false;
+    int previousRollsNum = 0;
     
     std::ifstream file(path);
     std::string line = "";
@@ -21,14 +25,17 @@ int main()
         {
             row.push_back(c);
         }
-        input.push_back(row);
+        input.push_back(row);  
     }
+
+    inputCopy = input;
 
     std::cout << "Table size: " << input.size() << " rows and " << input[0].size() << " columns." <<  std::endl;
 
-    while(lastNumOfRollsAccessed > 0)
+    while(wasZeroFound == false)
     {
-        lastNumOfRollsAccessed = 0;
+        input = inputCopy; 
+
     for(int i = 0; i < input.size(); i++)    //i - row index
     {
         for(int j = 0; j < input[i].size(); j++)    //j - column index
@@ -65,7 +72,9 @@ int main()
                     {
                         ctr = 0;
                         lastNumOfRollsAccessed++;
+                        inputCopy[i][j] = '.';
                         std::cout << "Roll accessed in the middle: " << i << "," << j << std::endl;
+                        wasAnyFound = true;
                     }
                 }
                 /// THIS PIECE OD CODE IS FOR ALL BOUNDARIES ///
@@ -131,6 +140,8 @@ int main()
                         if(ctr < 4)
                         {
                             lastNumOfRollsAccessed++;
+                            inputCopy[i][j] = '.';
+                            wasAnyFound = true;
                             std::cout << "Roll accessed in an upper boundary: " << i << "," << j << std::endl;
                         }
                     }
@@ -194,6 +205,8 @@ int main()
                         if(ctr < 4)
                         {
                             lastNumOfRollsAccessed++;
+                            inputCopy[i][j] = '.';
+                            wasAnyFound = true;
                             std::cout << "Roll accessed in a lower boundary: " << i << "," << j << std::endl;
                         }
   
@@ -220,6 +233,8 @@ int main()
                         if(ctr < 4)
                         {
                             lastNumOfRollsAccessed++;
+                            inputCopy[i][j] = '.';
+                            wasAnyFound = true;
                             std::cout << "Roll accessed in a left boundary: " << i << "," << j << std::endl;
                         }
                     }
@@ -245,6 +260,8 @@ int main()
                         if(ctr < 4)
                         {
                             lastNumOfRollsAccessed++;
+                            inputCopy[i][j] = '.';
+                            wasAnyFound = true;
                             std::cout << "Roll accessed in a right boundary: " << i << "," << j << std::endl;
                         }
                     }
@@ -257,11 +274,20 @@ int main()
                 //Zrobić żeby iterowało po następnej wersji pętli
                 //ZROBIĆ KOPIĘ PĘTLI A NIE ZMIENIAĆ NA ŻYWO -                             input[i][j] = '.';
             rollsAccessed += lastNumOfRollsAccessed;
+
             ctr = 0;
+            lastNumOfRollsAccessed = 0;
         }
 
     }
-
+            if(previousRollsNum == rollsAccessed)
+            {
+                wasZeroFound = true;
+            }
+            else
+            {
+                previousRollsNum = rollsAccessed;
+            }
     }
 
     std::cout << "Answer: " << rollsAccessed;
